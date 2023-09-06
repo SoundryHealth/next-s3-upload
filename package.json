@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "next-s3-upload",
   "version": "0.1.0",
   "workspaces": ["packages/next-s3-upload", "packages/docs-site"],
   "scripts": {
