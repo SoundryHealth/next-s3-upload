@@ -14,13 +14,15 @@ type Options = S3Config & {
 
 const makeRouteHandler = (options: Options = {}): Handler => {
   const nextAppRoute: NextAppRouteHandler = async function (req) {
+    const reqClone = req.clone() as NextRequest;
+
     const reqBody = await req.json();
     const { filename } = reqBody;
 
     const { key, ...s3Options } = options;
 
     const fileKey = key
-      ? await Promise.resolve(key(req, filename))
+      ? await Promise.resolve(key(reqClone, filename))
       : `next-s3-uploads/${uuid()}/${sanitizeKey(filename)}`;
 
     const response = await route({

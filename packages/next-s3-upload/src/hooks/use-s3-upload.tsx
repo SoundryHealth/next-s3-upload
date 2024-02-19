@@ -6,14 +6,14 @@ import { Upload } from '@aws-sdk/lib-storage';
 import { Uploader, useUploader } from './use-uploader';
 
 type Params = {
-  key: string;
+  fileKey: string;
   bucket: string;
   token: Record<string, any>;
   region: string;
 };
 
 let upload: Uploader<Params> = async (file, params, { onProgress }) => {
-  let { key, bucket, token, region } = params;
+  let { fileKey, bucket, token, region } = params;
 
   let client = new S3Client({
     credentials: {
@@ -26,7 +26,7 @@ let upload: Uploader<Params> = async (file, params, { onProgress }) => {
 
   let uploadParams = {
     Bucket: bucket,
-    Key: key,
+    Key: fileKey,
     Body: file,
     CacheControl: 'max-age=630720000, public',
     ContentType: file.type,
